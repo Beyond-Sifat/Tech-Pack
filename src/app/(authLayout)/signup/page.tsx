@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -72,12 +73,12 @@ export default function SignupPage() {
                     )}
                 </div>
 
-                <button
+                <Button
                     type="submit"
                     className="w-full bg-black py-2 text-white"
                 >
                     Sign Up
-                </button>
+                </Button>
             </form>
 
             <p className="mt-4 text-sm text-black">
