@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { setToken } from "@/lib/token";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 type LoginFormData = {
@@ -15,10 +17,26 @@ export default function LoginPage() {
         handleSubmit,
         formState: { errors },
     } = useForm<LoginFormData>();
+    const router = useRouter();
+    const onSubmit = async (data: LoginFormData) => {
 
-    const onSubmit = (data: LoginFormData) => {
-        console.log("Login Data:", data);
-    }
+        const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+        // console.log("Login Data:", data);
+
+        const result = await res.json();
+
+        if (result.token) {
+            setToken(result.token);
+            alert("Login successful!");
+            router.push('/');
+        } else {
+            alert(result.error || "Login failed");
+        }
+    };
     return (
         <div>
             <h1 className="mb-6 text-2xl font-bold text-black">Login</h1>

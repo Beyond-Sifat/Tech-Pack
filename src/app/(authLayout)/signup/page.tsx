@@ -1,12 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+// import { setToken } from "@/lib/token";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 
 type SignupFormData = {
-    name: string;
+    username: string;
     email: string;
     password: string;
 };
@@ -20,10 +22,24 @@ export default function SignupPage() {
         handleSubmit,
         formState: { errors },
     } = useForm<SignupFormData>()
+    const router = useRouter();
 
-    const onSubmit = (data: SignupFormData) => {
-    console.log("Signup Data:", data);
-  };
+    const onSubmit = async (data: SignupFormData) => {
+        const res = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            alert("SignUp successful!");
+            router.push("/");
+        } else {
+            alert(result.error || "SignUp failed");
+        }
+
+    };
     return (
         <div>
             <h1 className="mb-6 text-2xl font-bold text-black">Create Account</h1>
@@ -33,11 +49,11 @@ export default function SignupPage() {
                     <label className="block text-sm text-black">Name</label>
                     <input
                         type="text"
-                        {...register("name", { required: "Name is required" })}
+                        {...register("username", { required: "Name is required" })}
                         className="mt-1 w-full border border-black px-3 py-2"
                     />
-                    {errors.name && (
-                        <p className="text-sm text-black">{errors.name.message}</p>
+                    {errors.username && (
+                        <p className="text-sm text-black">{errors.username.message}</p>
                     )}
                 </div>
 
