@@ -1,9 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { setToken } from '../../lib/token';
+import { Button } from "@/components/ui/button";
 
+
+type User = {
+    email: string;
+    name: string;
+}
 export default function Header() {
+    const router = useRouter();
+
+
+
     const navLinks = [
         { name: "Home", href: "/" },
         { name: "Products", href: "/products" },
@@ -11,12 +23,36 @@ export default function Header() {
         { name: "About", href: "/about" },
     ];
 
-    const authLinks = [
-        { name: "Login", href: "/login" },
-        { name: "Sign Up", href: "/signup" },
-    ];
-
     const [menuOpen, setMenuOpen] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await fetch('/api/auth/me');
+            const data = await res.json();
+
+            if (data.authenticated) {
+                setUser(data.user);
+            } else {
+                setUser(null);
+            }
+
+            setLoading(false)
+        };
+
+        fetchUser();
+    }, [])
+
+    const handleLogout = async () => {
+        await fetch("/api/auth/logout", {
+            method: "POST",
+        });
+        setUser(null);
+        router.push('/login');
+    }
+
 
     return (
         <header className="w-full border-b border-black bg-white">
@@ -41,33 +77,50 @@ export default function Header() {
                     </nav>
 
                     {/* Desktop Auth Buttons */}
-                    <div className="hidden md:flex items-center gap-4">
-                        {authLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={`px-4 py-2 border border-black text-black ${link.name === "Sign Up"
-                                        ? "bg-black text-white"
-                                        : "bg-white"
-                                    }`}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                    </div>
+                    {!loading && (
+                        <div className="hidden md:flex items-center gap-4">
+                            {!user ? (
+                                <>
+                                    <Link
+                                        href="/login"
+                                    //className="border border-black px-4 py-2 text-black"
+                                    >
+                                        <Button>Login</Button>
+                                    </Link>
+                                    <Link
+                                        href="/signup"
+                                    //className="border border-black bg-black px-4 py-2 text-white"
+                                    >
+                                        <Button>Sign Up</Button>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="text-black text-sm">
+                                        {user.email}
+                                    </span>
+                                    <Button
+                                        onClick={handleLogout}
+                                        className="border border-black px-4 py-2 text-black"
+                                    >
+                                        Logout
+                                    </Button>
+                                </>
+                            )}
+                        </div>
+                    )}
 
-                    {/* Mobile Menu Button */}
-                    <button
+                    {/* Mobile Button */}
+                    <Button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="md:hidden border border-black px-3 py-1 text-black"
-                        aria-label="Toggle menu"
+                        className="md:hidden px-3 py-1"
                     >
                         {menuOpen ? "✕" : "☰"}
-                    </button>
+                    </Button>
                 </div>
 
                 {/* Mobile Menu */}
-                {menuOpen && (
+                {menuOpen && !loading && (
                     <div className="md:hidden border-t border-black py-4">
                         <nav className="flex flex-col gap-4">
                             {navLinks.map((link) => (
@@ -75,7 +128,6 @@ export default function Header() {
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => setMenuOpen(false)}
-                                    className="text-black"
                                 >
                                     {link.name}
                                 </Link>
@@ -83,19 +135,36 @@ export default function Header() {
                         </nav>
 
                         <div className="mt-6 flex flex-col gap-3">
-                            {authLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setMenuOpen(false)}
-                                    className={`px-4 py-2 text-center border border-black ${link.name === "Sign Up"
-                                            ? "bg-black text-white"
-                                            : "bg-white text-black"
-                                        }`}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
+                            {!user ? (
+                                <>
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setMenuOpen(false)}
+                                    //className="border border-black px-4 py-2 text-center"
+                                    >
+                                        <Button>Login</Button>
+                                    </Link>
+                                    <Link
+                                        href="/signup"
+                                        onClick={() => setMenuOpen(false)}
+                                    //className="border border-black bg-black px-4 py-2 text-center text-white"
+                                    >
+                                        <Button>Sign Up </Button>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="text-center text-sm">
+                                        {user.email}
+                                    </span>
+                                    <Button
+                                        onClick={handleLogout}
+                                        className="border border-black px-4 py-2"
+                                    >
+                                        Logout
+                                    </Button>
+                                </>
+                            )}
                         </div>
                     </div>
                 )}
