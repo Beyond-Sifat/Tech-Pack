@@ -101,7 +101,7 @@ export default function Header() {
                                     </span>
                                     <Button
                                         onClick={handleLogout}
-                                        className="border border-black px-4 py-2 text-black"
+                                        className="border border-black px-4 py-2 text-white"
                                     >
                                         Logout
                                     </Button>
@@ -159,7 +159,7 @@ export default function Header() {
                                     </span>
                                     <Button
                                         onClick={handleLogout}
-                                        className="border border-black px-4 py-2"
+                                        className="border border-white px-4 py-2"
                                     >
                                         Logout
                                     </Button>
