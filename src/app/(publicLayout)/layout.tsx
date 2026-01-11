@@ -8,10 +8,13 @@ export default function PublicLayout({
     children: React.ReactNode;
 }) {
     return (
-        <main>
+        <>
             <Header />
+            <div className='min-h-[calc(100vh-228.85px)]'>
                 {children}
+
+            </div>
             <Footer />
-        </main>
+        </>
     );
 }
