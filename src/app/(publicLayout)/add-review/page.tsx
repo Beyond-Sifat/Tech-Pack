@@ -34,21 +34,21 @@ export default function AddReviewPage() {
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
                 />
 
-                <textarea
-                    className="border w-full p-2 row-10"
+                <textarea rows={10}
+                    className="border w-full p-2"
                     placeholder="Description"
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                 />
 
-                <input
+                {/* <input
                     type="number"
                     min="1"
                     max="5"
                     className="border w-full p-2"
                     value={form.rating}
                     onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
-                />
+                /> */}
 
                 <button className="bg-black text-white px-4 py-2">
                     Submit
