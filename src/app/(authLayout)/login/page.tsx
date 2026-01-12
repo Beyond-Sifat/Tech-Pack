@@ -2,43 +2,40 @@
 
 import { Button } from "@/components/ui/button";
 import { setToken } from "@/lib/token";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 type LoginFormData = {
     email: string;
     password: string;
-}
+};
+
 export default function LoginPage() {
+    const { register, handleSubmit, formState: { errors } } =
+        useForm<LoginFormData>();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginFormData>();
     const router = useRouter();
-    const onSubmit = async (data: LoginFormData) => {
 
+    const onSubmit = async (data: LoginFormData) => {
         const res = await fetch("/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
-        // console.log("Login Data:", data);
 
         const result = await res.json();
 
         if (result.token) {
             setToken(result.token);
-            alert("Login successful!");
-            router.push('/');
+            router.push("/");
         } else {
             alert(result.error || "Login failed");
         }
     };
+
     return (
-        <div>
+        <>
             <h1 className="mb-6 text-2xl font-bold text-black">Login</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -66,10 +63,7 @@ export default function LoginPage() {
                     )}
                 </div>
 
-                <Button
-                    type="submit"
-                    className="w-full bg-black py-2 text-white"
-                >
+                <Button type="submit" className="w-full bg-black py-2 text-white">
                     Login
                 </Button>
             </form>
@@ -80,6 +74,6 @@ export default function LoginPage() {
                     Sign up
                 </Link>
             </p>
-        </div>
-    )
+        </>
+    );
 }

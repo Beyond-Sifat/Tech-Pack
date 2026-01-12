@@ -61,8 +61,8 @@ export default function Header() {
             <div className="mx-auto container ">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="text-xl font-bold text-black">
-                        Tech Pack
+                    <Link href="/" className="text-2xl font-bold text-black">
+                        Thoughts
                     </Link>
 
                     {/* Desktop Navigation */}
