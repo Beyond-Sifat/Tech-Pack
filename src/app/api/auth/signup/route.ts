@@ -1,12 +1,12 @@
 import { mongoConnect } from "@/lib/mongoConnect";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
     try {
         const { client, db } = await mongoConnect();
-        const { username, email, password } = await req.json();
+        const { username, email, password } = await request.json();
 
         if (!username || !email || !password) {
             //   client.close();

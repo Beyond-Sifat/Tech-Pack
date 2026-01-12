@@ -7,10 +7,10 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 if (!JWT_SECRET) throw new Error("Please add JWT_SECRET in .env");
 
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(request: NextRequest) {
     try {
         const { client, db } = await mongoConnect();
-        const { email, password } = await req.json();
+        const { email, password } = await request.json();
 
         const user = await db.collection("users").findOne({ email });
         if (!user) {

@@ -18,9 +18,11 @@ export default function Header() {
 
     const navLinks = [
         { name: "Home", href: "/" },
-        { name: "Products", href: "/products" },
-        { name: "Pricing", href: "/pricing" },
+        // { name: "Products", href: "/products" },
+        // { name: "Pricing", href: "/pricing" },
         { name: "About", href: "/about" },
+        { name: "Review", href: "/add-review" },
+        // { name: "My Posts", href: "/my-post" },
     ];
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -73,7 +75,13 @@ export default function Header() {
                             >
                                 {link.name}
                             </Link>
+
                         ))}
+                        {user &&
+                            <Link href="/my-post">
+                                My-Posts
+                            </Link>
+                        }
                     </nav>
 
                     {/* Desktop Auth Buttons */}
@@ -93,6 +101,7 @@ export default function Header() {
                                     >
                                         <Button>Sign Up</Button>
                                     </Link>
+
                                 </>
                             ) : (
                                 <>
