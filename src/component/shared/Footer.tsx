@@ -19,9 +19,9 @@ export default function Footer() {
     };
 
     return (
-        <footer className="  bg-white mt-15 p-20">
+        <footer className="  bg-white mt-15 p-10">
             <div className="mx-auto container ">
-                <div className="grid gap-10 md:grid-cols-4">
+                <div className="grid gap-10 md:grid-cols-4 mb-7">
                     {/* Brand */}
                     <div>
                         <h2 className="text-2xl font-bold text-black">Thoughts</h2>
