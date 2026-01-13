@@ -13,14 +13,14 @@ export default function HomePage() {
           Honest Reviews. Real Opinions.
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-          A minimal review platform where users share authentic experiences
+          A minimal post platform where users share authentic experiences
           without noise, ads, or distractions.
         </p>
         <div className="mt-8 flex justify-center gap-4">
           <Button className="bg-black text-white hover:bg-black/90">
-            Add a Review
+            Add a Post
           </Button>
-          <Button variant="outline">My Reviews</Button>
+          <Button variant="outline">My Posts</Button>
         </div>
       </section>
 
@@ -45,7 +45,7 @@ export default function HomePage() {
             <CardContent className="p-6">
               <h3 className="font-semibold text-lg mb-2">User-Owned Content</h3>
               <p className="text-sm text-muted-foreground">
-                Users fully control their reviews with edit and delete options.
+                Users fully control their posts with edit and delete options.
               </p>
             </CardContent>
           </Card>
