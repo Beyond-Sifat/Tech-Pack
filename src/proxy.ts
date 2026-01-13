@@ -13,7 +13,7 @@ export function proxy (req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/add-review", "/my-post"],
+    matcher: ["/add-review", "/my-post", "/allPosts"],
 };
 
 
