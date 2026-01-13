@@ -3,13 +3,13 @@ import Link from "next/link";
 export default function Footer() {
     const footerLinks = {
         product: [
-            { name: "Features", href: "/features" },
-            { name: "Pricing", href: "/pricing" },
+            // { name: "Features", href: "/features" },
+            // { name: "Pricing", href: "/pricing" },
             { name: "Documentation", href: "/docs" },
         ],
         company: [
             { name: "About", href: "/about" },
-            { name: "Careers", href: "/careers" },
+            // { name: "Careers", href: "/careers" },
             { name: "Contact", href: "/contact" },
         ],
         legal: [
@@ -24,7 +24,7 @@ export default function Footer() {
                 <div className="grid gap-10 md:grid-cols-4">
                     {/* Brand */}
                     <div>
-                        <h2 className="text-xl font-bold text-black">Tech Pack</h2>
+                        <h2 className="text-2xl font-bold text-black">Thoughts</h2>
                         <p className="mt-2 text-sm text-black">
                             Building reliable, modern web solutions.
                         </p>
