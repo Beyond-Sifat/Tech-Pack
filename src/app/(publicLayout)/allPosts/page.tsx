@@ -9,6 +9,7 @@ import { ThumbsUp } from "lucide-react";
 type Post = {
     _id: string;
     title: string;
+    email: string;
     description: string;
     likes: number;
 };
@@ -48,6 +49,7 @@ export default function AllPostsPage() {
                 <Card key={post._id}>
                     <CardContent className="p-6 space-y-3">
                         <h2 className="text-xl font-semibold">{post.title}</h2>
+                        <p className="text-sm text-gray-500"> Posted by: {post.email}</p>
                         <p className="text-gray-700">{post.description}</p>
 
                         <div className="flex items-center gap-4">
