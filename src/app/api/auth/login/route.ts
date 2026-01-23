@@ -52,8 +52,9 @@ export async function POST(request: NextRequest) {
             httpOnly: true, // cannot be accessed by JS
             path: "/", // cookie valid for all routes
             maxAge: 60 * 60 * 24, // 1 day in seconds
-            sameSite: "strict", // security
-            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax", // security
+            // secure: process.env.NODE_ENV === "production",
+            secure: true,
         });
 
         return res;
