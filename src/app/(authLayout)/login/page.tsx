@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { setToken } from "@/lib/token";
+// import { setToken } from "@/lib/token";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
@@ -24,15 +24,18 @@ export default function LoginPage() {
             body: JSON.stringify(data),
         });
 
-        const result = await res.json();
+        if (res.ok) {
+            // 🔴 VERY IMPORTANT: wait for cookie to be available
+            await new Promise((resolve) => setTimeout(resolve, 100));
 
-        if (result.token) {
-            setToken(result.token);
-            router.push("/");
+            // ✅ use replace to avoid back-navigation issues
+            router.replace("/");
         } else {
+            const result = await res.json();
             alert(result.error || "Login failed");
         }
     };
+
 
     return (
         <>
