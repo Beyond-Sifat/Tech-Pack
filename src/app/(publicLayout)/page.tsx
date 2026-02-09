@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -17,10 +18,17 @@ export default function HomePage() {
           without noise, ads, or distractions.
         </p>
         <div className="mt-8 flex justify-center gap-4">
-          <Button className="bg-black text-white hover:bg-black/90">
-            Add a Post
-          </Button>
-          <Button variant="outline">My Posts</Button>
+          <Link href="/add-review">
+            <Button className="bg-black text-white hover:bg-black/90">
+              Add a Post
+            </Button>
+          </Link>
+
+          <Link href="/my-post">
+            <Button variant="outline">
+              My Posts
+            </Button>
+          </Link>
         </div>
       </section>
 
