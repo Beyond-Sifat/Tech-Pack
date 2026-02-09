@@ -1,19 +1,44 @@
-import { NextRequest, NextResponse } from "next/server";
+// import { NextRequest, NextResponse } from "next/server";
+
+// export function proxy(request: NextRequest) {
+//     const token = request.cookies.get("token")?.value;
+
+//     // if (!token) {
+//     //     const loginUrl = new URL("/login", request.url);
+//     //     loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
+//     //     return NextResponse.redirect(loginUrl);
+//     // }
+
+//     const isProtectedRoute =
+//         request.nextUrl.pathname.startsWith("/add-review") ||
+//         request.nextUrl.pathname.startsWith("/my-post");
+
+//     if (isProtectedRoute && !token) {
+//         return NextResponse.redirect(new URL("/login", request.url));
+//     }
+
+//     return NextResponse.next();
+// }
+
+// export const config = {
+//     matcher: ["/add-review", "/my-post"],
+// };
+
+
+
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function proxy(request: NextRequest) {
     const token = request.cookies.get("token")?.value;
 
-    // if (!token) {
-    //     const loginUrl = new URL("/login", request.url);
-    //     loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
-    //     return NextResponse.redirect(loginUrl);
-    // }
+    const protectedRoutes = ["/add-review", "/my-post"];
 
-    const isProtectedRoute =
-        request.nextUrl.pathname.startsWith("/add-review") ||
-        request.nextUrl.pathname.startsWith("/my-post");
+    const isProtected = protectedRoutes.some((route) =>
+        request.nextUrl.pathname.startsWith(route)
+    );
 
-    if (isProtectedRoute && !token) {
+    if (isProtected && !token) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 
@@ -21,7 +46,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/add-review", "/my-post"],
+    matcher: ["/add-review/:path*", "/my-post/:path*"],
 };
 
 

@@ -27,6 +27,7 @@ export default function LoginPage() {
         if (res.ok) {
             // 🔴 VERY IMPORTANT: wait for cookie to be available
             await new Promise((resolve) => setTimeout(resolve, 100));
+            router.refresh();
 
             // ✅ use replace to avoid back-navigation issues
             router.replace("/");

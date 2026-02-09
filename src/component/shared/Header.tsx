@@ -142,6 +142,11 @@ export default function Header() {
                                     {link.name}
                                 </Link>
                             ))}
+                            {user &&
+                                <Link href="/my-post">
+                                    My-Posts
+                                </Link>
+                            }
                         </nav>
 
                         <div className="mt-6 flex flex-col gap-3">
